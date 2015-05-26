@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} Available data {% endblock %}
+
+{% block content %}
+{% if data_list %}
+    <ul>
+    {% for data in data_list %}
+        <li><a href="url 'repository:datum' data.name}/">{{ data.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No data available.</p>
+{% endif %}
+{% endblock %}
