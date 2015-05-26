@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form action="/your-name/" method="post">
+<form action="/repository/upload/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit" />

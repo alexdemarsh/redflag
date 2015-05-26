@@ -72,6 +72,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'capstone_project.wsgi.application'
 
+AWS_STORAGE_BUCKET_NAME = 'capstone-data-repo'
+AWS_ACCESS_KEY_ID = "AKIAII6U2FGIVRHSSJ6Q"
+AWS_SECRET_ACCESS_KEY = "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"
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
 # Database

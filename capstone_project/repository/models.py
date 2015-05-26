@@ -1,8 +1,13 @@
 from django.db import models
 
+
 # Create your models here.
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+
+from django_boto.s3.storage import S3Storage
+
+s3 = S3Storage()
 
 # class UserProfile(models.Model):
 #     user = models.OneToOneField(User)
@@ -13,8 +18,8 @@ class Data(models.Model):
 	description = models.TextField()
 	owner = models.ForeignKey(User, related_name='%(class)s_requests_created')
 	users = models.ManyToManyField(User)
-	contents = models.TextField()
-	# docfile = models.FileField(upload_to='documents/%Y/%m/%d')
+	# contents = models.TextField()
+	docfile = models.FileField(storage=s3)
 	version = models.IntegerField()
 
 	def __str__(self):

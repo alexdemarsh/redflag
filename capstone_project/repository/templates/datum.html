@@ -1,1 +1,13 @@
-{{ data }}
+{% extends "base.html" %}
+
+{% block title %} Datum {{data.name}} {% endblock %}
+
+{% block content %}
+
+    <ul>
+    {% for data in data_list %}
+        <li><a href="url 'repository:datum' data.name}/">{{ data.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
