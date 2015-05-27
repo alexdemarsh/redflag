@@ -6,7 +6,7 @@
 {% if data_list %}
     <ul>
     {% for data in data_list %}
-        <li>{% url 'repository:datum' data.id %}</li>
+		<li><a href="{% url 'repository:datum' data.id %}">{{ data }} details</a></li>
     {% endfor %}
     </ul>
 {% else %}

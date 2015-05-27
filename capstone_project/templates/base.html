@@ -1,26 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}Data repo{% endblock %}</title>
-</head>
+    <link rel="stylesheet" href="redflag.css">
+    <link rel="stylesheet" href="front_end.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
-<body>
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/registration/">Register</a></li>
-            <li><a href="/registration/login/">Login</a></li>
-            <li><a href="/repository/upload_file/">Upload</a></li>
-        {% endblock %}
+     <title>Redflag data repo</title>
+  </head>
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only"> Toggle navigation </span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <b ><a class="navbar-brand" href="#"> Redflag data repo </a></b>
+      <a class="navbar-brand" href="/"> Home </a>
+      <a class="navbar-brand" href="/registration/"> Register </a>
+      <a class="navbar-brand" href="/registration/login/"> Login </a>
+      <a class="navbar-brand" href="/repository/upload_file/"> Upload </a>
     </div>
+</nav>
 
-    <div id="content">
+
+<div class="container">
         {% block content %}
         {% endblock %}
-    </div>
+</div>
+
 </body>
 <footer>
 </footer>

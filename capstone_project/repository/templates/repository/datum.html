@@ -6,5 +6,6 @@
 	<div id="detail">
     <p> Name: {{ datum.name }} </p>
     <p> Description: {{ datum.description }} </p>
-    <p> Download: {{ datum.url }} </p>
+    <p><a href="{% url 'repository:datum' datum.id %}">{{ datum }} download</a></p>
+    <p> Owner: {{datum.owner}}</p>
 {% endblock %}

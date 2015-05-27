@@ -10,6 +10,8 @@ from .forms import UploadFileForm
 
 from django_boto.s3 import upload
 
+from django.views.generic.base import TemplateView
+
 # Create your views here.
 
 # def owner_only(function):
@@ -30,6 +32,7 @@ def upload_file(request):
 			data_url = upload(request.FILES['file'])
 			#create new django model
 			d = Data.objects.create(owner=request.user)
+			d.name = request.POST['name']
 			d.url = data_url
 			d.description =request.POST['description']
 			d.save()
@@ -76,3 +79,13 @@ def datum(request, data_id):
 	datum = Data.objects.get(pk=data_id)
 	context = {'datum':datum}
 	return render(request, 'repository/datum.html', context)
+
+
+class HomePageView(TemplateView):
+
+    template_name = "repository/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context['data_list'] = Data.objects.all()
+        return context
