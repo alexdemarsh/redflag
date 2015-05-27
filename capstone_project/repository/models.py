@@ -5,22 +5,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
-from django_boto.s3.storage import S3Storage
-
-s3 = S3Storage()
-
-# class UserProfile(models.Model):
-#     user = models.OneToOneField(User)
-#     usertype = models.BooleanField(default=0)
-
 class Data(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.TextField()
 	owner = models.ForeignKey(User, related_name='%(class)s_requests_created')
 	users = models.ManyToManyField(User)
-	# contents = models.TextField()
-	docfile = models.FileField(storage=s3)
-	version = models.IntegerField()
+	url = models.URLField(default='')
+	version = models.IntegerField(default=1)
 
 	def __str__(self):
 		return self.name

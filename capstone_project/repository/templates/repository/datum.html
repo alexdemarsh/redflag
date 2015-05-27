@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %} Detail {% endblock %}
+
+{% block content %}
+	<div id="detail">
+    <p> Name: {{ datum.name }} </p>
+    <p> Description: {{ datum.description }} </p>
+    <p> Download: {{ datum.url }} </p>
+{% endblock %}

@@ -2,8 +2,12 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
+from django.views import generic
+
 from .models import Data, Math
+
 from .forms import UploadFileForm
+
 from django_boto.s3 import upload
 
 # Create your views here.
@@ -17,28 +21,48 @@ from django_boto.s3 import upload
 # 	wrap.__name__=function.__name__
 # 	return wrap
 
-def handle_uploaded_file(f):
-    with open('data.csv', 'wb+') as destination:
-    	for chunk in f.chunks():
-    		destination.write(chunk)
+@login_required(login_url='/registration/login/')
+def upload_file(request):
+	if request.method == 'POST':
+		form = UploadFileForm(request.POST, request.FILES)
+		if form.is_valid():
+			print request.FILES['file']
+			data_url = upload(request.FILES['file'])
+			#create new django model
+			d = Data.objects.create(owner=request.user)
+			d.url = data_url
+			d.description =request.POST['description']
+			d.save()
+		return HttpResponseRedirect('/repository/')
+	else:
+		form = UploadFileForm()
+	return render(request,'upload.html', {'form': form})
+
 
 @login_required(login_url='/registration/login/')
 def upload_csv(request):
 	if request.method == 'POST':
 		form = UploadFileForm(request.POST, request.FILES)
+		data_url = upload(request.FILES['file'])
 		if form.is_valid():
-			upload(request.FILES['file'])
+			data_url = upload(request.FILES['file'])
+			print data_url
 			print ("uploaded: ", request.FILES['file'])
 			# handle_uploaded_file(request.FILES['file'])
 			return HttpResponseRedirect('/repository/')
+		else:
+			print ("invalid form", form.errors)
 	else:
 		form = UploadFileForm()
-	return render_to_response('upload.html', {'form':form})
+	return render(request, 'upload.html', {'form':form})
 
-@login_required(login_url='/registration/login/')
-def add(request):
-	return render(request)
 
+# class IndexView(generic.ListView):
+# 	template_name = 'repository/index.html'
+# 	context_object_name = 'data_list'
+
+# 	def get_queryset(self):
+# 		return Data.objects.all()
 
 @login_required(login_url='/registration/login')
 def index(request):
@@ -49,5 +73,6 @@ def index(request):
 
 @login_required(login_url='registration/login')
 def datum(request, data_id):
-	data = get_object_or_404(Data, pk=data_id)
-	return render(request, 'repository/datum.html')
+	datum = Data.objects.get(pk=data_id)
+	context = {'datum':datum}
+	return render(request, 'repository/datum.html', context)

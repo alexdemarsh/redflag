@@ -4,10 +4,13 @@
 
 {% block content %}
 
-<form action="/repository/upload/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
+<p> FORM <p/>
+		<form action="/repository/upload_file/" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form }}
+		<input type = "submit" value = "Submit">
+	</form>
+
 </form>
 
 {% endblock %}
